@@ -1,0 +1,479 @@
+basePath: /api/v1
+definitions:
+  github_com_elfrida_chemistry-coach_internal_domain.DailyExercise:
+    properties:
+      criterion:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_domain.DebriefScores:
+    properties:
+      balance:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.ScoreDetail'
+      clarity:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.ScoreDetail'
+      confidence:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.ScoreDetail'
+      respect:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.ScoreDetail'
+    type: object
+  github_com_elfrida_chemistry-coach_internal_domain.ImprovedReply:
+    properties:
+      improved:
+        type: string
+      original:
+        type: string
+      reason:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_domain.RiskFlag:
+    properties:
+      explanation:
+        type: string
+      quote:
+        type: string
+      severity:
+        type: string
+      suggestion:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_domain.ScoreDetail:
+    properties:
+      comment:
+        type: string
+      value:
+        type: integer
+    type: object
+  github_com_elfrida_chemistry-coach_internal_domain.SkillScores:
+    properties:
+      balance:
+        type: integer
+      clarity:
+        type: integer
+      confidence:
+        type: integer
+      respect:
+        type: integer
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.AuthStartInput:
+    properties:
+      birthYear:
+        type: integer
+      consents:
+        properties:
+          agreesToRules:
+            type: boolean
+          isAdult:
+            type: boolean
+          understandsAI:
+            type: boolean
+        type: object
+      userID:
+        description: 'optional: return existing'
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.AuthStartOutput:
+    properties:
+      isNewUser:
+        type: boolean
+      userId:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.ConsentRiskDTO:
+    properties:
+      detected:
+        type: boolean
+      explanation:
+        type: string
+      severity:
+        type: string
+      suggestion:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.CreateSessionInput:
+    properties:
+      goalId:
+        type: string
+      personaId:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.CreateSessionOutput:
+    properties:
+      goalTitle:
+        type: string
+      openingMessage:
+        type: string
+      personaInitials:
+        type: string
+      personaTitle:
+        type: string
+      sessionId:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.FinishOutput:
+    properties:
+      finishedAt:
+        type: string
+      hasRisk:
+        type: boolean
+      improvedReplies:
+        items:
+          $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.ImprovedReply'
+        type: array
+      persona:
+        type: string
+      riskFlags:
+        items:
+          $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.RiskFlag'
+        type: array
+      scenario:
+        type: string
+      scores:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.DebriefScores'
+      sessionId:
+        type: string
+      strengths:
+        items:
+          type: string
+        type: array
+      tipForNext:
+        type: string
+      weaknesses:
+        items:
+          type: string
+        type: array
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.MessageDTO:
+    properties:
+      id:
+        type: string
+      sender:
+        type: string
+      status:
+        type: string
+      statusLabel:
+        type: string
+      text:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.ProfileOutput:
+    properties:
+      initials:
+        type: string
+      recommendedGoalId:
+        type: string
+      totalSessions:
+        type: integer
+      userId:
+        type: string
+      weakestSkill:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.SendMessageInput:
+    properties:
+      text:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.SendMessageOutput:
+    properties:
+      consentRisk:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.ConsentRiskDTO'
+      messageCount:
+        type: integer
+      personaMessage:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.MessageDTO'
+      shouldSuggestEnd:
+        type: boolean
+      userMessage:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.MessageDTO'
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.SessionListItem:
+    properties:
+      date:
+        type: string
+      hasRisk:
+        type: boolean
+      id:
+        type: string
+      persona:
+        type: string
+      scenario:
+        type: string
+      scores:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.SkillScores'
+      time:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.SessionsListOutput:
+    properties:
+      clarityHistory:
+        items:
+          type: integer
+        type: array
+      dailyExercise:
+        $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_domain.DailyExercise'
+      focusSessionCount:
+        type: integer
+      focusSkill:
+        type: string
+      focusSkillLabel:
+        type: string
+      sessions:
+        items:
+          $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.SessionListItem'
+        type: array
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.SuggestInput:
+    properties:
+      draft:
+        type: string
+    type: object
+  github_com_elfrida_chemistry-coach_internal_usecase.SuggestOutput:
+    properties:
+      suggestion:
+        type: string
+    type: object
+host: localhost:3001
+info:
+  contact: {}
+  description: 18+ AI-тренажёр романтической коммуникации (MVP backend)
+  title: Alice Chemistry Coach API
+  version: "1.0"
+paths:
+  /auth/start:
+    post:
+      consumes:
+      - application/json
+      description: Creates anonymous user or returns existing
+      parameters:
+      - description: Onboarding data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.AuthStartInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.AuthStartOutput'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Start onboarding / auth
+      tags:
+      - auth
+  /goals:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List goals
+      tags:
+      - catalog
+  /personas:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List personas
+      tags:
+      - catalog
+  /profile:
+    get:
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-Id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.ProfileOutput'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get user profile
+      tags:
+      - profile
+  /sessions:
+    get:
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-Id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.SessionsListOutput'
+      summary: List sessions history
+      tags:
+      - sessions
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-Id
+        required: true
+        type: string
+      - description: Session
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.CreateSessionInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.CreateSessionOutput'
+      summary: Create session
+      tags:
+      - sessions
+  /sessions/{sessionId}:
+    get:
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-Id
+        required: true
+        type: string
+      - description: Session ID
+        in: path
+        name: sessionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.FinishOutput'
+      summary: Get session debrief
+      tags:
+      - sessions
+  /sessions/{sessionId}/finish:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-Id
+        required: true
+        type: string
+      - description: Session ID
+        in: path
+        name: sessionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.FinishOutput'
+      summary: Finish session and debrief
+      tags:
+      - sessions
+  /sessions/{sessionId}/messages:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-Id
+        required: true
+        type: string
+      - description: Session ID
+        in: path
+        name: sessionId
+        required: true
+        type: string
+      - description: Message
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.SendMessageInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.SendMessageOutput'
+      summary: Send chat message
+      tags:
+      - sessions
+  /sessions/{sessionId}/suggest:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-Id
+        required: true
+        type: string
+      - description: Session ID
+        in: path
+        name: sessionId
+        required: true
+        type: string
+      - description: Draft
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.SuggestInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_elfrida_chemistry-coach_internal_usecase.SuggestOutput'
+      summary: Magic wand suggestion
+      tags:
+      - sessions
+schemes:
+- http
+swagger: "2.0"

@@ -1,0 +1,160 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* Alice Chemistry Coach - Dark Theme Design System */
+:root {
+  /* Background colors */
+  --background: #0E0E12;
+  --surface: #16161D;
+  --surface-elevated: #1E1E27;
+  
+  /* Border */
+  --border: #2A2A36;
+  --border-subtle: #2A2A36;
+  
+  /* Accent colors */
+  --accent: #F5A524;
+  --accent-hover: #FFB733;
+  --accent-foreground: #0E0E12;
+  
+  /* Semantic colors */
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  
+  /* Text colors */
+  --foreground: #F5F5F7;
+  --foreground-secondary: #9A9AA5;
+  --foreground-muted: #6B6B76;
+  
+  /* Mapped semantic tokens for shadcn compatibility */
+  --card: #16161D;
+  --card-foreground: #F5F5F7;
+  --popover: #1E1E27;
+  --popover-foreground: #F5F5F7;
+  --primary: #F5A524;
+  --primary-foreground: #0E0E12;
+  --secondary: #1E1E27;
+  --secondary-foreground: #F5F5F7;
+  --muted: #16161D;
+  --muted-foreground: #9A9AA5;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --input: #2A2A36;
+  --ring: #F5A524;
+  
+  /* Radius tokens */
+  --radius: 0.75rem;
+  --radius-card: 1rem;
+  --radius-button: 0.75rem;
+  
+  /* Sidebar tokens */
+  --sidebar: #16161D;
+  --sidebar-foreground: #F5F5F7;
+  --sidebar-primary: #F5A524;
+  --sidebar-primary-foreground: #0E0E12;
+  --sidebar-accent: #1E1E27;
+  --sidebar-accent-foreground: #F5F5F7;
+  --sidebar-border: #2A2A36;
+  --sidebar-ring: #F5A524;
+  
+  /* Chart colors */
+  --chart-1: #F5A524;
+  --chart-2: #22C55E;
+  --chart-3: #F59E0B;
+  --chart-4: #EF4444;
+  --chart-5: #9A9AA5;
+}
+
+@theme inline {
+  --font-sans: 'Inter', 'Inter Fallback', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
+  
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: var(--radius-card);
+  
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  html {
+    @apply bg-background;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Typography scale */
+.text-h1 {
+  @apply text-[32px] leading-[40px] font-bold;
+}
+
+.text-h2 {
+  @apply text-[24px] leading-[32px] font-semibold;
+}
+
+.text-h3 {
+  @apply text-[18px] leading-[26px] font-semibold;
+}
+
+.text-body {
+  @apply text-[15px] leading-[22px] font-normal;
+}
+
+.text-small {
+  @apply text-[13px] leading-[18px] font-medium;
+}

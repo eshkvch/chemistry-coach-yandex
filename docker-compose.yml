@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: acc_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d acc_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:password@db:5432/acc_db?sslmode=disable
+      YANDEX_AI_API_KEY: ${YANDEX_AI_API_KEY:-}
+      YANDEX_AI_MODEL: ${YANDEX_AI_MODEL:-yandexgpt}
+      YANDEX_FOLDER_ID: ${YANDEX_FOLDER_ID:-}
+      YANDEX_AI_BASE_URL: https://llm.api.cloud.yandex.net/foundationModels/v1
+      # Allow requests from the frontend container
+      CORS_ALLOWED_ORIGINS: "*"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # NEXT_PUBLIC_API_URL is baked into the JS bundle at build time.
+        # The browser runs on the host machine, so it must reach the API
+        # via the host-exposed port (localhost:8080).
+        NEXT_PUBLIC_API_URL: http://localhost:8080
+    depends_on:
+      - api
+    ports:
+      - "3032:3032"
+    environment:
+      NODE_ENV: production
+
+volumes:
+  pgdata:
